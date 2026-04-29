@@ -123,6 +123,39 @@ body {
     background: var(--light-color);
 }
 
+.products__sort {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 30px;
+    gap: 10px;
+}
+
+.products__sort label {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.sort-select {
+    padding: 10px 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    background: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.sort-select:hover {
+    border-color: var(--secondary-color);
+}
+
+.sort-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+}
+
 .section-title {
     text-align: center;
     margin-bottom: 50px;
@@ -171,6 +204,12 @@ body {
 
 .card__title {
     font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.card__description {
+    color: #666;
+    font-size: 0.9rem;
     margin-bottom: 10px;
 }
 
@@ -236,10 +275,20 @@ body {
 
 .cart-item {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
+}
+
+.cart-item span:first-child {
+    font-weight: 600;
+}
+
+.cart-item p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 5px;
 }
 
 .checkout__total {

@@ -1,29 +1,45 @@
 // Mock Data Produk
 const products = [
-    { id: 1, name: 'Apel ', price: 35000, img: 'o_1a220t3t51r0o2h7ih318031c9oa.jpg' },
-    { id: 2, name: 'Jeruk ', price: 28000, img: 'ARTIKEL_2024-09-09_Thumbnail Artikel Website (3).jpg' },
-    { id: 3, name: 'Pisang ', price: 20000, img: 'images.jpg' },
-    { id: 4, name: 'Anggur Merah', price: 55000, img: 'images (1).jpg' },
-    { id: 5, name: 'Alpukat ', price: 45000, img: 'buah-alpukat-aligator-1024x683.webp' },
-    { id: 6, name: 'Strawberry', price: 30000, img: 'gallery-1432664914-strawberry-facts1.jpg' }
+    { id: 1, name: 'Apel ', price: 35000, img: 'o_1a220t3t51r0o2h7ih318031c9oa.jpg', description: 'apel segar dan manis' },
+    { id: 2, name: 'Jeruk ', price: 28000, img: 'ARTIKEL_2024-09-09_Thumbnail Artikel Website (3).jpg', description: 'Jeruk segar kaya vitamin C' },
+    { id: 3, name: 'Pisang ', price: 20000, img: 'images.jpg', description: 'Pisang matang sempurna' },
+    { id: 4, name: 'Anggur Merah', price: 55000, img: 'images (1).jpg', description: 'Anggur merah tanpa biji' },
+    { id: 5, name: 'Alpukat ', price: 45000, img: 'buah-alpukat-aligator-1024x683.webp', description: 'Alpukat creamy dan lezat' },
+    { id: 6, name: 'Strawberry', price: 30000, img: 'gallery-1432664914-strawberry-facts1.jpg', description: 'Strawberry segar import' }
 ];
 
 let cart = [];
 
 // Render Produk
-function renderProducts() {
+function renderProducts(productList = products) {
     const grid = document.getElementById('product-grid');
-    grid.innerHTML = products.map(product => `
+    grid.innerHTML = productList.map(product => `
         <div class="card">
             <img src="${product.img}" alt="${product.name}" class="card__img">
             <div class="card__info">
                 <h3 class="card__title">${product.name}</h3>
+                <p class="card__description">${product.description}</p>
                 <span class="card__price">Rp ${product.price.toLocaleString('id-ID')} /kg</span>
                 <button onclick="addToCart(${product.id})" class="btn btn--primary btn--full">Tambah ke Keranjang</button>
             </div>
         </div>
     `).join('');
 }
+
+// Urutkan Produk
+window.sortProducts = function(sortType) {
+    let sortedProducts = [...products];
+    
+    if (sortType === 'low-high') {
+        sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (sortType === 'high-low') {
+        sortedProducts.sort((a, b) => b.price - a.price);
+    } else {
+        sortedProducts = [...products];
+    }
+    
+    renderProducts(sortedProducts);
+};
 
 // Tambah ke Keranjang
 window.addToCart = function(id) {
@@ -51,6 +67,7 @@ function updateCartUI() {
         <div class="cart-item">
             <span>${item.name}</span>
             <span>Rp ${item.price.toLocaleString('id-ID')}</span>
+            <p>${item.description}</p>
         </div>
     `).join('');
 
@@ -95,3 +112,4 @@ window.addEventListener('scroll', () => {
 document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
 });
+

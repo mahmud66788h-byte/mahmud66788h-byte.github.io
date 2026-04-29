@@ -14,7 +14,7 @@
 <body>
     <nav class="navbar">
         <div class="container navbar__container">
-            <a href="#" class="navbar__logo">Toko<span>Buah</span></a>
+            <a href="#" class="navbar__logo">TokoBuah<span>Ceria</span></a>
             <ul class="navbar__menu">
                 <li><a href="#home" class="navbar__link active">Awal</a></li>
                 <li><a href="#list" class="navbar__link">List Buah</a></li>
@@ -38,6 +38,14 @@
     <section id="list" class="products">
         <div class="container">
             <h2 class="section-title">Koleksi Buah Kami</h2>
+            <div class="products__sort">
+                <label for="sort-price">Urutkan:</label>
+                <select id="sort-price" class="sort-select" onchange="sortProducts(this.value)">
+                    <option value="default">Default</option>
+                    <option value="low-high">Termurah - Termahal</option>
+                    <option value="high-low">Termahal - Termurah</option>
+                </select>
+            </div>
             <div class="products__grid" id="product-grid">
                 
             </div>
@@ -94,7 +102,8 @@
   
 </a>
 
-    <script src="script.js"></script>
+     <script src="script.js"></script> 
+     <!-- <script src="coba.js"></script> -->
     
 </body>
 </html>
