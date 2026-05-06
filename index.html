@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Tombol Whatsapp</title>
 </head>
 <body>
@@ -16,8 +17,8 @@
         <div class="container navbar__container">
             <a href="#" class="navbar__logo">TokoBuah<span>Ceria</span></a>
             <ul class="navbar__menu">
-                <li><a href="#home" class="navbar__link active">Awal</a></li>
-                <li><a href="#list" class="navbar__link">List Buah</a></li>
+                <li><a href="#home" class="navbar__link active">Beranda</a></li>
+                <li><a href="#list" class="navbar__link">Daftar Buah</a></li>
                 <li><a href="#checkout" class="navbar__link">Pembayaran</a></li>
             </ul>
             <div class="navbar__cart">
@@ -86,6 +87,16 @@
                     </div>
                     <button type="submit" class="btn btn--success btn--full">Konfirmasi Pembayaran</button>
                 </form>
+                <div class="checkout__chart">
+                    <h3>Diagram Penjualan</h3>
+                    <canvas id="salesChart" width="1000" height="400"></canvas>
+                </div>
+                <details class="checkout__history">
+                    <summary>Riwayat Pembelian</summary>
+                    <div id="purchase-history" class="history__list">
+                        <p class="empty-msg">Belum ada riwayat transaksi.</p>
+                    </div>
+                </details>
             </div>
         </div>
     </section>
@@ -93,17 +104,16 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 FreshFruit Store. All Rights Reserved.</p>
+            <p class="visitor-counter">
+                <i class="fas fa-users"></i> Jumlah Pengunjung: <span id="visitor-count">0</span>
+            </p>
         </div>
     </footer>
     
-</a>
 <a href="https://wa.me/6285812775808" target="_blank" class="wa-button">
   <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
-  
 </a>
 
-     <script src="script.js"></script> 
-     <!-- <script src="coba.js"></script> -->
-    
+    <script src="script.js"></script>
 </body>
 </html>
