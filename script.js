@@ -1,10 +1,10 @@
 // Mock Data Produk
 const products = [
-    { id: 1, name: 'Apel Manalagi', price: 35000, img: 'images (3).jpg', description: 'apel segar dan manis', shelfLife: 'Tahan 5 hari di kulkas', sold: 0, stock: 50 },
+    { id: 1, name: 'Apel Manalagi', price: 36000, img: 'images (3).jpg', description: 'apel segar dan manis', shelfLife: 'Tahan 5 hari di kulkas', sold: 0, stock: 50 },
     { id: 2, name: 'Jeruk Sunkist', price: 28000, img: 'ARTIKEL_2024-09-09_Thumbnail Artikel Website (3).jpg', description: 'Jeruk segar kaya vitamin C', shelfLife: 'Tahan 7 hari di kulkas', sold: 0, stock: 50 },
     { id: 3, name: 'Pisang Ambon', price: 20000, img: 'images.jpg', description: 'Pisang matang sempurna', shelfLife: 'Tahan 3-4 hari di kulkas', sold: 0, stock: 50 },
-    { id: 4, name: 'Anggur Merah', price: 55000, img: 'images (1).jpg', description: 'Anggur merah tanpa biji', shelfLife: 'Tahan 5 hari di kulkas', sold: 0, stock: 50 },
-    { id: 5, name: 'Alpukat Mentega', price: 45000, img: 'buah-alpukat-aligator-1024x683.webp', description: 'Alpukat creamy dan lezat', shelfLife: 'Tahan 2-3 hari di kulkas', sold: 0, stock: 50 },
+    { id: 4, name: 'Anggur Merah', price: 56000, img: 'images (1).jpg', description: 'Anggur merah tanpa biji', shelfLife: 'Tahan 5 hari di kulkas', sold: 0, stock: 50 },
+    { id: 5, name: 'Alpukat Mentega', price: 40000, img: 'buah-alpukat-aligator-1024x683.webp', description: 'Alpukat creamy dan lezat', shelfLife: 'Tahan 2-3 hari di kulkas', sold: 0, stock: 50 },
     { id: 6, name: 'Strawberry Mencir', price: 30000, img: 'gallery-1432664914-strawberry-facts1.jpg', description: 'Strawberry segar import', shelfLife: 'Tahan 3 hari di kulkas', sold: 0, stock: 50 },
     { id: 7, name: 'Nanas Madu', price: 32000, img: '052500500_1605602630-Menilik-Manfaat-Nanas-Madu-bagi-Kesehatan-Anda-shutterstock_1503954347.jpg', description: 'Nanas manis dan segar', shelfLife: 'Tahan 5-6 hari di kulkas', sold: 0, stock: 50 },
     { id: 8, name: 'Mangga Manalagi', price: 38000, img: 'mangga-manalagi.jpg', description: 'Mangga segar penuh nutrisi', shelfLife: 'Tahan 4-5 hari di kulkas', sold: 0, stock: 50 }
@@ -32,6 +32,29 @@ function renderStars(rating) {
         stars += '<i class="far fa-star"></i>';
     }
     return stars;
+}
+
+const DISCOUNT_RATE = 0.1;
+
+function getMedianPrice(productList = products) {
+    const prices = productList
+        .map(product => product.price)
+        .sort((a, b) => a - b);
+
+    const middle = Math.floor(prices.length / 2);
+    if (prices.length % 2 === 0) {
+        return (prices[middle - 1] + prices[middle]) / 2;
+    }
+    return prices[middle];
+}
+
+function getDiscountedPrice(product) {
+    const median = getMedianPrice(products);
+    if (product.price >= median) {
+        const discounted = Math.round(product.price * (1 - DISCOUNT_RATE));
+        return discounted % 2 === 0 ? discounted : discounted - 1;
+    }
+    return product.price;
 }
 
 // Fungsi untuk menghitung rating rata-rata dari ulasan
@@ -192,6 +215,8 @@ function renderProducts(productList = products) {
         const currentRating = calculateAverageRating(product.id);
         const stars = renderStars(currentRating);
         const reviewCount = (reviews[product.id] || []).length;
+        const discountedPrice = getDiscountedPrice(product);
+        const isDiscounted = discountedPrice < product.price;
         
         return `
         <div class="card">
@@ -205,7 +230,13 @@ function renderProducts(productList = products) {
                 </div>
                 <span class="card__shelf-life">${product.shelfLife}</span>
                 <span class="card__stock ${stockClass}">${stockText}</span>
-                <span class="card__price">Rp ${product.price.toLocaleString('id-ID')} /kg</span>
+                ${isDiscounted ? `<div class="card__price-row">
+                    <div class="card__price-group">
+                        <span class="card__price card__price--original">Rp ${product.price.toLocaleString('id-ID')}</span>
+                        <span class="card__price card__price--discounted">Rp ${discountedPrice.toLocaleString('id-ID')} /kg</span>
+                    </div>
+                    <span class="discount-badge">Diskon ${Math.round(DISCOUNT_RATE * 100)}%</span>
+                </div>` : `<span class="card__price">Rp ${product.price.toLocaleString('id-ID')} /kg</span>`}
                 <span class="card__sold">Terjual: ${product.sold || 0}</span>
                 <div class="card__actions">
                     <button onclick="addToCart(${product.id})" class="btn btn--primary btn--full" ${product.stock <= 0 ? 'disabled' : ''}>${product.stock <= 0 ? 'Habis' : 'Tambah ke Keranjang'}</button>
@@ -299,20 +330,45 @@ function updateCartUI() {
         return;
     }
 
-    cartItems.innerHTML = cart.map((item, index) => `
+    cartItems.innerHTML = cart.map((item, index) => {
+        const itemPrice = getDiscountedPrice(item);
+        const hasDiscount = itemPrice < item.price;
+        return `
         <div class="cart-item">
             <div class="cart-item__top">
                 <span>${item.name}</span>
                 <button class="btn btn--danger" onclick="removeFromCart(${index})">Batalkan</button>
             </div>
-            <span>Rp ${item.price.toLocaleString('id-ID')}</span>
+            <span>${hasDiscount ? `<span class="card__price card__price--original">Rp ${item.price.toLocaleString('id-ID')}</span> <span class="card__price card__price--discounted">Rp ${itemPrice.toLocaleString('id-ID')}</span>` : `Rp ${itemPrice.toLocaleString('id-ID')}`}</span>
             <p>${item.description}</p>
         </div>
-    `).join('');
+    `;
+    }).join('');
 
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const total = cart.reduce((sum, item) => sum + getDiscountedPrice(item), 0);
     totalPrice.innerText = `Rp ${total.toLocaleString('id-ID')}`;
 }
+
+// Handle Payment Method Selection
+document.getElementById('payment-method').addEventListener('change', function(e) {
+    const paymentDetails = document.getElementById('payment-details');
+    const bankTransferDetails = document.getElementById('bank-transfer-details');
+    const ewalletDetails = document.getElementById('ewallet-details');
+    
+    if (e.target.value === 'transfer') {
+        paymentDetails.style.display = 'block';
+        bankTransferDetails.style.display = 'block';
+        ewalletDetails.style.display = 'none';
+    } else if (e.target.value === 'e-wallet') {
+        paymentDetails.style.display = 'block';
+        bankTransferDetails.style.display = 'none';
+        ewalletDetails.style.display = 'block';
+    } else {
+        paymentDetails.style.display = 'none';
+        bankTransferDetails.style.display = 'none';
+        ewalletDetails.style.display = 'none';
+    }
+});
 
 // Form Handle
 document.getElementById('payment-form').addEventListener('submit', function(e) {
@@ -323,7 +379,7 @@ document.getElementById('payment-form').addEventListener('submit', function(e) {
     }
     
     // Simpan data penjualan
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const total = cart.reduce((sum, item) => sum + getDiscountedPrice(item), 0);
     const salesData = {
         date: new Date().toLocaleString('id-ID'),
         items: cart.length,

@@ -190,6 +190,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
+    align-items: stretch;
 }
 
 .card {
@@ -198,6 +199,9 @@ body {
     overflow: hidden;
     box-shadow: var(--shadow);
     transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .card:hover {
@@ -212,6 +216,10 @@ body {
 
 .card__info {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
 }
 
 .card__title {
@@ -256,6 +264,44 @@ body {
     font-size: 1.1rem;
     margin-bottom: 15px;
     display: block;
+}
+
+.card__price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.card__price-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card__price--original {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+.card__price--discounted {
+    color: #d32f2f;
+    font-size: 1.1rem;
+    display: block;
+}
+
+.discount-badge {
+    display: inline-block;
+    margin-top: 0;
+    padding: 4px 8px;
+    background: #d32f2f;
+    color: #fff;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
 }
 
 .card__stock {
@@ -490,6 +536,58 @@ body {
     font-family: inherit;
 }
 
+/* Payment Details */
+.payment-details {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f0f8f4;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.payment-details h4 {
+    font-size: 1.1rem;
+    color: var(--dark-color);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.payment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.payment-info__item {
+    background: var(--white);
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.payment-info__item label {
+    display: block;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.payment-number {
+    font-size: 1rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.payment-info__item p {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
 .footer {
     background: var(--dark-color);
     color: white;
@@ -539,7 +637,7 @@ body {
 .card__actions {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: auto;
 }
 
 .btn--secondary {

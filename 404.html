@@ -78,12 +78,40 @@
                     </div>
                     <div class="form-group">
                         <label>Metode Pembayaran</label>
-                        <select required>
+                        <select id="payment-method" required>
                             <option value="">Pilih Metode</option>
                             <option value="transfer">Transfer Bank</option>
                             <option value="e-wallet">E-Wallet (OVO/Dana)</option>
                             <option value="cod">Bayar di Tempat (COD)</option>
                         </select>
+                    </div>
+                    <div id="payment-details" class="payment-details" style="display: none;">
+                        <div id="bank-transfer-details" class="payment-info" style="display: none;">
+                            <h4>Detail Transfer Bank</h4>
+                            <div class="payment-info__item">
+                                <label>Bank BRI</label>
+                                <p class="payment-number">1234 5678 9012 3456</p>
+                            </div>
+                            <div class="payment-info__item">
+                                <label>Bank Mandiri</label>
+                                <p class="payment-number">9876 5432 1098 7654</p>
+                            </div>
+                            <div class="payment-info__item">
+                                <label>Atas Nama</label>
+                                <p>TokoBuah Ceria</p>
+                            </div>
+                        </div>
+                        <div id="ewallet-details" class="payment-info" style="display: none;">
+                            <h4>Detail E-Wallet</h4>
+                            <div class="payment-info__item">
+                                <label>OVO</label>
+                                <p class="payment-number">081234567890</p>
+                            </div>
+                            <div class="payment-info__item">
+                                <label>Dana</label>
+                                <p class="payment-number">081987654321</p>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn--success btn--full">Konfirmasi Pembayaran</button>
                 </form>
