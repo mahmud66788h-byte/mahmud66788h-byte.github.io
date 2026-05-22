@@ -20,9 +20,10 @@
                 <li><a href="#home" class="navbar__link active">Beranda</a></li>
                 <li><a href="#list" class="navbar__link">Daftar Buah</a></li>
                 <li><a href="#checkout" class="navbar__link">Pembayaran</a></li>
+                
             </ul>
             <div class="navbar__cart">
-                <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-shopping-cart"></i>    
                 <span id="cart-count">0</span>
             </div>
         </div>
@@ -32,11 +33,11 @@
         <div class="container hero__content">
             <h1>Kesegaran Alam <br>Langsung ke Pintu Anda</h1>
             <p>Menyediakan berbagai macam buah-buahan organik dan segar dengan kualitas premium untuk kesehatan keluarga Anda.</p>
-            <a href="#list" class="btn btn--primary">Belanja Sekarang</a>
+            <a href="#list" class="btn btn--primary"    `````````````````````````````````````````       >Belanja Sekarang</a>
         </div>
     </section>
 
-    <section id="list" class="products">
+    <section id="list"class="products">
         <div class="container">
             <h2 class="section-title">Koleksi Buah Kami</h2>
             <div class="products__sort">
@@ -119,7 +120,7 @@
                     <h3>Diagram Penjualan</h3>
                     <canvas id="salesChart" width="1000" height="400"></canvas>
                 </div>
-                <details class="checkout__history">
+                <details class="checkout__history" id="purchase-history-section">
                     <summary>Riwayat Pembelian</summary>
                     <div id="purchase-history" class="history__list">
                         <p class="empty-msg">Belum ada riwayat transaksi.</p>

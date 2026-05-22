@@ -1,8 +1,8 @@
 :root {
-    --primary-color: #27ae60;
+    --primary-color: #12b154;
     --secondary-color: #2ecc71;
     --dark-color: #2c3e50;
-    --light-color: #f9f9f9;
+    --light-color: #ffffff;
     --accent-color: #e67e22;
     --text-color: #333;
     --white: #ffffff;
@@ -14,13 +14,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: #fff;
+    background-color: #ffffff;
     scroll-behavior: smooth;
 }
 
@@ -30,7 +31,6 @@ body {
     padding: 0 20px;
 }
 
-/* Navbar */
 .navbar {
     background: var(--white);
     height: 80px;
@@ -99,7 +99,7 @@ body {
     color: var(--primary-color);
 }
 
-/* Hero */
+
 .hero {
     height: 100vh;
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('ChatGPT Image May 5, 2026, 01_21_24 PM.png') center/cover;
@@ -121,7 +121,7 @@ body {
     max-width: 600px;
 }
 
-/* Products */
+
 .products {
     padding: 100px 0;
     background: var(--light-color);
@@ -190,7 +190,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
-    align-items: stretch;
+    align-items: start;
 }
 
 .card {
@@ -201,7 +201,8 @@ body {
     transition: var(--transition);
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 750px;
+    justify-content: space-between;
 }
 
 .card:hover {
@@ -266,25 +267,11 @@ body {
     display: block;
 }
 
-.card__price-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 15px;
-}
-
-.card__price-group {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
 .card__price--original {
     color: #888;
     text-decoration: line-through;
     font-size: 0.95rem;
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 
 .card__price--discounted {
@@ -295,7 +282,7 @@ body {
 
 .discount-badge {
     display: inline-block;
-    margin-top: 0;
+    margin-top: 4px;
     padding: 4px 8px;
     background: #d32f2f;
     color: #fff;
@@ -330,7 +317,7 @@ body {
     background: #c0392b;
 }
 
-/* Buttons */
+
 .btn {
     display: inline-block;
     padding: 12px 30px;
@@ -345,6 +332,7 @@ body {
 .btn--primary {
     background: var(--primary-color);
     color: var(--white);
+    
 }
 
 .btn--primary:hover {
@@ -372,7 +360,7 @@ body {
     width: 100%;
 }
 
-/* Checkout */
+
 .checkout {
     padding: 100px 0;
 }

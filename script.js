@@ -1,4 +1,4 @@
-// Mock Data Produk
+
 const products = [
     { id: 1, name: 'Apel Manalagi', price: 36000, img: 'images (3).jpg', description: 'apel segar dan manis', shelfLife: 'Tahan 5 hari di kulkas', sold: 0, stock: 50 },
     { id: 2, name: 'Jeruk Sunkist', price: 28000, img: 'ARTIKEL_2024-09-09_Thumbnail Artikel Website (3).jpg', description: 'Jeruk segar kaya vitamin C', shelfLife: 'Tahan 7 hari di kulkas', sold: 0, stock: 50 },
@@ -12,10 +12,10 @@ const products = [
 
 let cart = [];
 
-// Data Ulasan
+
 let reviews = JSON.parse(localStorage.getItem('productReviews')) || {};
 
-// Fungsi untuk render rating bintang
+
 function renderStars(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
@@ -57,7 +57,7 @@ function getDiscountedPrice(product) {
     return product.price;
 }
 
-// Fungsi untuk menghitung rating rata-rata dari ulasan
+
 function calculateAverageRating(productId) {
     const productReviews = reviews[productId] || [];
     if (productReviews.length === 0) return 0;
@@ -66,7 +66,7 @@ function calculateAverageRating(productId) {
     return totalRating / productReviews.length;
 }
 
-// Fungsi untuk menyimpan ulasan
+
 function saveReview(productId, reviewData) {
     if (!reviews[productId]) {
         reviews[productId] = [];
@@ -74,14 +74,14 @@ function saveReview(productId, reviewData) {
     reviews[productId].push(reviewData);
     localStorage.setItem('productReviews', JSON.stringify(reviews));
     
-    // Update rating produk
+
     const product = products.find(p => p.id === productId);
     if (product) {
         product.rating = calculateAverageRating(productId);
     }
 }
 
-// Fungsi untuk render ulasan produk
+
 function renderProductReviews(productId) {
     const productReviews = reviews[productId] || [];
     if (productReviews.length === 0) {
@@ -102,7 +102,7 @@ function renderProductReviews(productId) {
         </div>
     `).join('');
 }
-// Fungsi untuk menampilkan modal ulasan
+
 window.showReviews = function(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
@@ -159,7 +159,7 @@ window.showReviews = function(productId) {
     document.body.appendChild(modal);
 };
 
-// Fungsi untuk menutup modal ulasan
+
 window.closeReviewModal = function() {
     const modal = document.querySelector('.review-modal');
     if (modal) {
@@ -167,7 +167,7 @@ window.closeReviewModal = function() {
     }
 };
 
-// Fungsi untuk submit ulasan
+
 window.submitReview = function(event, productId) {
     event.preventDefault();
     
@@ -184,18 +184,18 @@ window.submitReview = function(event, productId) {
     saveReview(productId, reviewData);
     renderProducts();
     
-    // Update ulasan di modal
+    
     const reviewsContainer = document.getElementById(`reviews-container-${productId}`);
     if (reviewsContainer) {
         reviewsContainer.innerHTML = renderProductReviews(productId);
     }
     
-    // Reset form
+    
     form.reset();
     
     alert('Terima kasih atas ulasan Anda!');
 };
-// Penghitung Pengunjung
+
 function updateVisitorCount() {
     let count = localStorage.getItem('visitorCount');
     if (!count) {
@@ -206,7 +206,7 @@ function updateVisitorCount() {
     document.getElementById('visitor-count').textContent = count;
 }
 
-// Render Produk
+
 function renderProducts(productList = products) {
     const grid = document.getElementById('product-grid');
     grid.innerHTML = productList.map(product => {
@@ -231,7 +231,7 @@ function renderProducts(productList = products) {
                 <span class="card__shelf-life">${product.shelfLife}</span>
                 <span class="card__stock ${stockClass}">${stockText}</span>
                 ${isDiscounted ? `<div class="card__price-row">
-                    <div class="card__price-group">
+                  <div class="card__price-group">
                         <span class="card__price card__price--original">Rp ${product.price.toLocaleString('id-ID')}</span>
                         <span class="card__price card__price--discounted">Rp ${discountedPrice.toLocaleString('id-ID')} /kg</span>
                     </div>
@@ -262,9 +262,9 @@ function saveProductSales(cartItems) {
     localStorage.setItem('productSales', JSON.stringify(salesByProduct));
 }
 
-// Panggil saat halaman dimuat
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Inisialisasi rating untuk semua produk
+  
     products.forEach(product => {
         product.rating = calculateAverageRating(product.id);
     });
@@ -277,22 +277,20 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSalesChart();
 });
 
-// Urutkan Produk
+
 window.sortProducts = function(sortType) {
-    let sortedProducts = [...products];
-    
     if (sortType === 'low-high') {
-        sortedProducts.sort((a, b) => a.price - b.price);
+        const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+        renderProducts(sortedProducts);
     } else if (sortType === 'high-low') {
-        sortedProducts.sort((a, b) => b.price - a.price);
+        const sortedProducts = [...products].sort((a, b) => b.price - a.price);
+        renderProducts(sortedProducts);
     } else {
-        sortedProducts = [...products];
+        renderProducts(products);
     }
-    
-    renderProducts(sortedProducts);
 };
 
-// Tambah ke Keranjang
+
 window.addToCart = function(id) {
     const product = products.find(p => p.id === id);
     if (!product || product.stock <= 0) {
@@ -316,7 +314,7 @@ window.removeFromCart = function(index) {
     renderProducts();
 };
 
-// Update UI Keranjang
+
 function updateCartUI() {
     const cartCount = document.getElementById('cart-count');
     const cartItems = document.getElementById('cart-items');
@@ -349,7 +347,7 @@ function updateCartUI() {
     totalPrice.innerText = `Rp ${total.toLocaleString('id-ID')}`;
 }
 
-// Handle Payment Method Selection
+
 document.getElementById('payment-method').addEventListener('change', function(e) {
     const paymentDetails = document.getElementById('payment-details');
     const bankTransferDetails = document.getElementById('bank-transfer-details');
@@ -370,7 +368,7 @@ document.getElementById('payment-method').addEventListener('change', function(e)
     }
 });
 
-// Form Handle
+
 document.getElementById('payment-form').addEventListener('submit', function(e) {
     e.preventDefault();
     if (cart.length === 0) {
@@ -378,7 +376,7 @@ document.getElementById('payment-form').addEventListener('submit', function(e) {
         return;
     }
     
-    // Simpan data penjualan
+  
     const total = cart.reduce((sum, item) => sum + getDiscountedPrice(item), 0);
     const salesData = {
         date: new Date().toLocaleString('id-ID'),
@@ -402,7 +400,7 @@ document.getElementById('payment-form').addEventListener('submit', function(e) {
     this.reset();
 });
 
-// Tampilkan Total Penjualan
+
 function updateSalesDisplay() {
     let sales = JSON.parse(localStorage.getItem('salesData')) || [];
     const salesCountElement = document.getElementById('sales-count');
@@ -454,7 +452,7 @@ function renderPurchaseHistory() {
     }).join('');
 }
 
-// Render Diagram Penjualan
+
 function renderSalesChart() {
     const canvas = document.getElementById('salesChart');
     if (!canvas || typeof Chart === 'undefined') {
@@ -497,7 +495,7 @@ function renderSalesChart() {
     }
 }
 
-// Navbar Active Link
+
 window.addEventListener('scroll', () => {
     let current = '';
     const sections = document.querySelectorAll('section');
@@ -516,5 +514,5 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Navbar Active Link
+
 
